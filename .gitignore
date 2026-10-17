@@ -6,4 +6,5 @@ out/
 .env*.local
 *.tsbuildinfo
 next-env.d.ts
-.DS_Store
+.DS_StoreA
+.playwright-mcp/
