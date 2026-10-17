@@ -12,7 +12,7 @@ import {
 import type { CartLine, Catalog, Product } from '@/lib/types';
 
 const CART_KEY = 'remen-cart-v1';
-const MAX_RESULTS = 60;
+const PAGE_SIZE = 80;
 
 type GroupFilter = 'all' | 'timing' | 'vbelt';
 
@@ -21,6 +21,14 @@ function formBadge(p: Product): { label: string; cls: string } | null {
   if (p.form === 'sleeve_rib') return { label: 'rukav / rib', cls: 'badge sleeve' };
   if (p.form === 'roll') return { label: 'rulon', cls: 'badge roll' };
   return null;
+}
+
+/** Rukavni kesishda ishlatiladigan standart riblar soni */
+const RIB_PRESETS = [3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 24];
+
+/** "A 500" va "a500" bir xil topilishi uchun belgilar olib tashlanadi */
+function squash(value: string): string {
+  return value.toLowerCase().replace(/[\s\-_.,/()]+/g, '');
 }
 
 function haystack(p: Product): string {
@@ -36,10 +44,14 @@ export default function Calculator() {
 
   const [query, setQuery] = useState('');
   const [group, setGroup] = useState<GroupFilter>('all');
+  const [typeFilter, setTypeFilter] = useState<string | null>(null);
   const [lines, setLines] = useState<CartLine[]>([]);
   const [globalDiscount, setGlobalDiscount] = useState(0);
   const [showCost, setShowCost] = useState(false);
+  const [typesOpen, setTypesOpen] = useState(true);
+  const [sizeMenuFor, setSizeMenuFor] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   // --- katalogni yuklash ---------------------------------------------------
   const loadCatalog = useCallback(async () => {
@@ -82,9 +94,33 @@ export default function Calculator() {
     }
   }, [lines, globalDiscount]);
 
+  // Xabarlar o'zi so'nadi: oddiy xabar tez, xato uzoqroq turadi
+  useEffect(() => {
+    if (!notice) return;
+    const t = setTimeout(() => setNotice(null), 3500);
+    return () => clearTimeout(t);
+  }, [notice]);
+
+  useEffect(() => {
+    if (!error) return;
+    const t = setTimeout(() => setError(null), 12000);
+    return () => clearTimeout(t);
+  }, [error]);
+
+  useEffect(() => {
+    if (!sizeMenuFor) return;
+    const onDown = (e: PointerEvent) => {
+      const el = e.target as HTMLElement | null;
+      if (!el?.closest('.combo')) setSizeMenuFor(null);
+    };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [sizeMenuFor]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const tag = document.activeElement?.tagName;
+      if (e.key === 'Escape') setSizeMenuFor(null);
       if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
         e.preventDefault();
         searchRef.current?.focus();
@@ -122,22 +158,86 @@ export default function Calculator() {
   const products = useMemo(() => catalog?.products ?? [], [catalog]);
   const byId = useMemo(() => new Map(products.map((p) => [p.id, p])), [products]);
 
+  /** Joriy guruhdagi tiplar (kategoriyalar) va ularda nechta mahsulot borligi */
+  const types = useMemo(() => {
+    const pool = group === 'all' ? products : products.filter((p) => p.group === group);
+    const counts = new Map<string, number>();
+    for (const p of pool) {
+      if (!p.type) continue;
+      counts.set(p.type, (counts.get(p.type) ?? 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0], 'ru', { numeric: true }));
+  }, [products, group]);
+
+  // Guruh almashganda tanlangan kategoriya yo'q bo'lib qolishi mumkin
+  useEffect(() => {
+    if (typeFilter && !types.some(([t]) => t === typeFilter)) setTypeFilter(null);
+  }, [types, typeFilter]);
+
+  /** Standart kengliklar (mm) — AppSheetdagi mavjud o'lchamlardan yig'iladi */
+  const mmPresets = useMemo(() => {
+    const set = new Set<number>();
+    for (const p of products) {
+      if (p.form === 'sleeve_mm' && p.defaultSize > 0) set.add(p.defaultSize);
+    }
+    return [...set].sort((a, b) => a - b).filter((w) => w <= 200);
+  }, [products]);
+
+  const sizeOptions = (product: Product): number[] => {
+    const base = product.form === 'sleeve_rib' ? RIB_PRESETS : mmPresets;
+    const max = product.sleeveSize || Infinity;
+    return base.filter((v) => v <= max);
+  };
+
   const results = useMemo(() => {
     const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    const pool = group === 'all' ? products : products.filter((p) => p.group === group);
-    if (tokens.length === 0) return pool.slice(0, MAX_RESULTS);
+    let pool = group === 'all' ? products : products.filter((p) => p.group === group);
+    if (typeFilter) pool = pool.filter((p) => p.type === typeFilter);
+    if (tokens.length === 0) return pool;
+    const squashed = tokens.map(squash).filter(Boolean);
     const scored: { p: Product; score: number }[] = [];
     for (const p of pool) {
       const hay = haystack(p);
-      if (!tokens.every((t) => hay.includes(t))) continue;
+      const flat = squash(hay);
+      if (!tokens.every((t, i) => hay.includes(t) || flat.includes(squashed[i]))) continue;
       const code = p.code.toLowerCase();
+      const flatCode = squash(code);
       const joined = tokens.join(' ');
-      scored.push({ p, score: code === joined ? 0 : code.startsWith(tokens[0]) ? 1 : 2 });
-      if (scored.length > 400) break;
+      const flatQuery = squashed.join('');
+      scored.push({
+        p,
+        score:
+          code === joined || flatCode === flatQuery
+            ? 0
+            : flatCode.startsWith(squashed[0])
+              ? 1
+              : 2,
+      });
     }
     scored.sort((a, b) => a.score - b.score);
-    return scored.slice(0, MAX_RESULTS).map((s) => s.p);
-  }, [products, query, group]);
+    return scored.map((s) => s.p);
+  }, [products, query, group, typeFilter]);
+
+  // Ro'yxat uzun bo'lgani uchun scroll qilgan sayin qo'shimcha qism chiziladi
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+    if (resultsRef.current) resultsRef.current.scrollTop = 0;
+  }, [query, group, typeFilter]);
+
+  const visibleResults = useMemo(
+    () => results.slice(0, visibleCount),
+    [results, visibleCount],
+  );
+
+  const onResultsScroll = () => {
+    const el = resultsRef.current;
+    if (!el) return;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 160) {
+      setVisibleCount((c) => (c >= results.length ? c : c + PAGE_SIZE));
+    }
+  };
 
   // --- savat amallari ------------------------------------------------------
   const addProduct = (p: Product) => {
@@ -212,6 +312,17 @@ export default function Calculator() {
     }
   };
 
+  const [printedAt, setPrintedAt] = useState('');
+
+  useEffect(() => {
+    setPrintedAt(new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent' }));
+  }, []);
+
+  const printCart = () => {
+    setPrintedAt(new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent' }));
+    setTimeout(() => window.print(), 60);
+  };
+
   const syncedLabel = catalog?.syncedAt
     ? new Date(catalog.syncedAt).toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent' })
     : 'noma’lum';
@@ -219,10 +330,7 @@ export default function Calculator() {
   return (
     <div className="app">
       <header className="top">
-        <div className="brand">
-          Remen kalkulyator
-          <span>AppSheet ma&apos;lumotlari asosida</span>
-        </div>
+        <div className="brand">Remen kalkulyator</div>
         <div className="spacer" />
         <div className="chip">Kurs: {formatSom(catalog?.usdRate ?? 0)} so&apos;m</div>
         <div className="chip">Mahsulot: {products.length}</div>
@@ -232,15 +340,102 @@ export default function Calculator() {
         </button>
       </header>
 
-      {error && <div className="error">{error}</div>}
-      {notice && <div className="ok-msg">{notice}</div>}
+      {/* Faqat chop etishda ko'rinadi: hidden + @media print */}
+      <div className="print-sheet" hidden aria-hidden>
+        <div className="print-head">
+          <div>
+            <h1>Hisob-kitob</h1>
+            <div className="print-meta">Sana: {printedAt}</div>
+          </div>
+          <div className="print-meta">
+            Pozitsiya: {rows.length} · Dona: {summary.qty}
+          </div>
+        </div>
+
+        <table className="print-table">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Mahsulot</th>
+              <th>O&apos;lcham</th>
+              <th>Soni</th>
+              <th>Narx (QQS bilan)</th>
+              <th>Summa (QQS bilan)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(({ line, product, totals }, i) => (
+              <tr key={line.lineId}>
+                <td>{i + 1}</td>
+                <td>
+                  <b>{product.code}</b>
+                  {product.name && product.name !== product.code && (
+                    <div className="print-sub">{product.name}</div>
+                  )}
+                </td>
+                <td>{isVariable(product) ? `${line.size} ${sizeUnit(product)}` : '—'}</td>
+                <td>{line.qty}</td>
+                <td>{formatSom(totals.unitPriceVat)}</td>
+                <td>
+                  <b>{formatSom(totals.totalVat)}</b>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="print-total">
+          <div>
+            <span>Jami (QQSsiz)</span>
+            <span>{formatSom(summary.total)} so&apos;m</span>
+          </div>
+          {summary.discountTotal > 0 && (
+            <div>
+              <span>Chegirma</span>
+              <span>−{formatSom(summary.discountTotal)} so&apos;m</span>
+            </div>
+          )}
+          <div>
+            <span>QQS 12%</span>
+            <span>{formatSom(summary.vat)} so&apos;m</span>
+          </div>
+          <div className="grand">
+            <span>Jami (QQS bilan)</span>
+            <span>{formatSom(summary.totalVat)} so&apos;m</span>
+          </div>
+        </div>
+      </div>
+
+      {(notice || error) && (
+        <div className="toasts">
+          {notice && (
+            <div className="toast ok">
+              <span>{notice}</span>
+              <button className="icon-btn" aria-label="Yopish" onClick={() => setNotice(null)}>
+                ✕
+              </button>
+            </div>
+          )}
+          {error && (
+            <div className="toast err">
+              <span>{error}</span>
+              <button className="icon-btn" aria-label="Yopish" onClick={() => setError(null)}>
+                ✕
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="layout">
         <section className="panel search-panel">
           <div className="head">
             <h2>Mahsulot qidirish</h2>
             <div className="spacer" />
-            <span className="chip">{results.length} ta</span>
+            <span className="chip">
+              {results.length} ta
+              {visibleResults.length < results.length ? ` (${visibleResults.length} ko'rsatilmoqda)` : ''}
+            </span>
           </div>
           <div className="body">
             <input
@@ -267,11 +462,38 @@ export default function Calculator() {
                 </button>
               ))}
             </div>
+
+            <div className="types-head">
+              <span>Kategoriyalar ({types.length})</span>
+              {typeFilter && (
+                <button className="btn sm ghost" onClick={() => setTypeFilter(null)}>
+                  ✕ {typeFilter}
+                </button>
+              )}
+              <button className="btn sm ghost" onClick={() => setTypesOpen((v) => !v)}>
+                {typesOpen ? 'Yashirish' : 'Ko‘rsatish'}
+              </button>
+            </div>
+
+            {typesOpen && (
+              <div className="types">
+                {types.map(([type, count]) => (
+                  <button
+                    key={type}
+                    className={`type-card ${typeFilter === type ? 'active' : ''}`}
+                    onClick={() => setTypeFilter((cur) => (cur === type ? null : type))}
+                  >
+                    <span className="type-name">{type}</span>
+                    <span className="type-count">{count}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="results">
+          <div className="results" ref={resultsRef} onScroll={onResultsScroll}>
             {loading && <div className="empty">Yuklanmoqda…</div>}
             {!loading && results.length === 0 && <div className="empty">Hech narsa topilmadi.</div>}
-            {results.map((p) => {
+            {visibleResults.map((p) => {
               const u = unitPrice(p, p.defaultSize);
               const badge = formBadge(p);
               return (
@@ -303,6 +525,17 @@ export default function Calculator() {
                 </div>
               );
             })}
+            {visibleResults.length < results.length && (
+              <div className="empty">
+                Yana {results.length - visibleResults.length} ta —{' '}
+                <button
+                  className="btn sm"
+                  onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+                >
+                  ko&apos;rsatish
+                </button>
+              </div>
+            )}
           </div>
         </section>
 
@@ -323,7 +556,7 @@ export default function Calculator() {
             </button>
             <button
               className="btn sm ghost"
-              onClick={() => window.print()}
+              onClick={printCart}
               disabled={rows.length === 0}
             >
               Chop etish
@@ -334,20 +567,23 @@ export default function Calculator() {
           </div>
 
           {rows.length === 0 ? (
-            <div className="empty">Savat bo&apos;sh. Chapdagi ro&apos;yxatdan mahsulot tanlang.</div>
+            <div className="empty grow">Savat bo&apos;sh. Chapdagi ro&apos;yxatdan mahsulot tanlang.</div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
+            <div className="cart-scroll">
               <table className="cart">
+                <colgroup>
+                  <col />
+                  <col className="col-size" />
+                  <col className="col-qty" />
+                  <col className="col-sum" />
+                  <col className="col-del" />
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Mahsulot</th>
                     <th>O&apos;lcham</th>
                     <th>Soni</th>
-                    <th>Narx (QQSsiz)</th>
-                    <th>Chegirma %</th>
-                    <th>Summa (QQSsiz)</th>
-                    <th>Summa (QQS bilan)</th>
-                    {showCost && <th>Foyda</th>}
+                    <th>QQS bilan</th>
                     <th />
                   </tr>
                 </thead>
@@ -355,70 +591,91 @@ export default function Calculator() {
                   {rows.map(({ line, product, totals }) => (
                     <tr key={line.lineId}>
                       <td>
-                        <div className="cell-name">{product.code}</div>
-                        <div className="cell-sub">
-                          {[product.type, product.manufacturer].filter(Boolean).join(' · ')}
-                          {showCost ? ` · tannarx ${formatSom(totals.netCost)}` : ''}
+                        <div className="cell-name" title={product.name || product.code}>
+                          {product.code}
                         </div>
+                        {showCost && (
+                          <div className="cell-sub">
+                            tannarx {formatSom(totals.netCost)} ·{' '}
+                            <span className={totals.profit >= 0 ? 'profit' : 'loss'}>
+                              foyda {formatSom(totals.profit)}
+                            </span>
+                          </div>
+                        )}
                       </td>
                       <td>
                         {isVariable(product) ? (
-                          <>
-                            <input
-                              className="num small"
-                              type="number"
-                              min={1}
-                              max={product.sleeveSize || undefined}
-                              value={line.size || ''}
-                              onChange={(e) =>
-                                patchLine(line.lineId, { size: Number(e.target.value) || 0 })
-                              }
-                            />{' '}
-                            <span className="cell-sub">{sizeUnit(product)}</span>
-                          </>
+                          <div className="combo">
+                            <div className="field">
+                              <input
+                                type="number"
+                                min={1}
+                                max={product.sleeveSize || undefined}
+                                value={line.size || ''}
+                                onChange={(e) =>
+                                  patchLine(line.lineId, { size: Number(e.target.value) || 0 })
+                                }
+                                onFocus={() => setSizeMenuFor(line.lineId)}
+                              />
+                              <span>{sizeUnit(product)}</span>
+                              <button
+                                type="button"
+                                className="combo-toggle"
+                                aria-label="O&apos;lchamni tanlash"
+                                onClick={() =>
+                                  setSizeMenuFor((cur) => (cur === line.lineId ? null : line.lineId))
+                                }
+                              >
+                                ▾
+                              </button>
+                            </div>
+                            {sizeMenuFor === line.lineId && (
+                              <div className="size-menu">
+                                {sizeOptions(product).map((v) => (
+                                  <button
+                                    key={v}
+                                    type="button"
+                                    className={line.size === v ? 'active' : ''}
+                                    onClick={() => {
+                                      patchLine(line.lineId, { size: v });
+                                      setSizeMenuFor(null);
+                                    }}
+                                  >
+                                    {v}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ) : (
                           <span className="cell-sub">dona</span>
                         )}
                       </td>
                       <td>
-                        <input
-                          className="num small"
-                          type="number"
-                          min={1}
-                          value={line.qty || ''}
-                          onChange={(e) =>
-                            patchLine(line.lineId, { qty: Number(e.target.value) || 0 })
-                          }
-                        />
-                      </td>
-                      <td>{formatSom(totals.unitPrice)}</td>
-                      <td>
-                        <input
-                          className="num small"
-                          type="number"
-                          min={0}
-                          max={100}
-                          placeholder="0"
-                          value={line.discount || ''}
-                          onChange={(e) =>
-                            patchLine(line.lineId, { discount: Number(e.target.value) || 0 })
-                          }
-                        />
+                        <div className="field">
+                          <input
+                            type="number"
+                            min={1}
+                            value={line.qty || ''}
+                            onChange={(e) =>
+                              patchLine(line.lineId, { qty: Number(e.target.value) || 0 })
+                            }
+                          />
+                        </div>
                       </td>
                       <td>
-                        <b>{formatSom(totals.total)}</b>
+                        <b>{formatSom(totals.totalVat)}</b>
                         {totals.discountAmount > 0 && (
                           <div className="cell-sub">−{formatSom(totals.discountAmount)}</div>
                         )}
                       </td>
-                      <td>{formatSom(totals.totalVat)}</td>
-                      {showCost && (
-                        <td style={{ color: totals.profit >= 0 ? 'var(--ok)' : 'var(--danger)' }}>
-                          {formatSom(totals.profit)}
-                        </td>
-                      )}
                       <td>
-                        <button className="btn sm danger" onClick={() => removeLine(line.lineId)}>
+                        <button
+                          className="icon-btn"
+                          title="O&apos;chirish"
+                          aria-label="O&apos;chirish"
+                          onClick={() => removeLine(line.lineId)}
+                        >
                           ✕
                         </button>
                       </td>
@@ -442,17 +699,22 @@ export default function Calculator() {
             </div>
             <div className="row">
               <span className="muted">Umumiy chegirma</span>
-              <span>
-                <input
-                  className="num small"
-                  type="number"
-                  min={0}
-                  max={100}
-                  placeholder="0"
-                  value={globalDiscount || ''}
-                  onChange={(e) => setGlobalDiscount(Number(e.target.value) || 0)}
-                />{' '}
-                % → −{formatSom(summary.discountTotal)} so&apos;m
+              <span className="discount-cell">
+                <span className={`field ${globalDiscount > 0 ? 'on' : ''}`}>
+                  <input
+                    type="number"
+                    min={0}
+                    max={100}
+                    placeholder="0"
+                    value={globalDiscount || ''}
+                    onChange={(e) => setGlobalDiscount(Number(e.target.value) || 0)}
+                  />
+                  <span>%</span>
+                </span>
+                <b className={summary.discountTotal > 0 ? 'discount-val' : 'muted'}>
+                  −{formatSom(summary.discountTotal)}
+                </b>{' '}
+                so&apos;m
               </span>
             </div>
             <div className="row">
