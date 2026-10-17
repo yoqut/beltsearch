@@ -1,0 +1,178 @@
+[
+    {
+        "_RowNumber": "2",
+        "manufacturer_id": "8e35c0c6",
+        "Manufacturer": "4-Belt",
+        "Country": "Италия",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "3",
+        "manufacturer_id": "c2f89f85",
+        "Manufacturer": "MEGADYNE",
+        "Country": "Италия",
+        "Related VBelts": "pjb003 , pjb006 , pjb008 , pjb012 , pjb014 , pjb021 , pjb024 , pjb026 , pjb030 , pjb033 , pjb036 , vb0002 , vb0003 , vb0004 , vb0006 , vb0009 , vb0012 , vb0017 , vb0024 , vb0028 , vb0033 , vb0036 , vb0039 , vb0041 , vb0043 , vb0045 , vb0047 , vb0050 , vb0055 , vb0057 , vb0059 , vb0066 , vb0068 , vb0069 , vb0072 , vb0073 , vb0075 , vb0080 , vb0084 , vb0087 , vb0093 , vb0104 , vb0112 , vb0117 , vb0118 , vb0120 , vb0122 , vb0124 , vb0126 , vb0129 , vb0131 , vb0133 , vb0135 , vb0137 , vb0140 , vb0142 , vb0146 , vb0148 , vb0150 , vb0154 , vb0156 , vb0159 , vb0160 , vb0163 , vb0166 , vb0169 , vb0173 , vb0174 , vb0177 , vb0179 , vb0181 , vb0183 , vb0189 , vb0195 , vb0199 , vb0202 , vb0206 , vb0208 , vb0211 , vb0214 , vb0218 , vb0222 , vb0228 , vb0229 , vb0230 , vb0231 , vb0232 , vb0233 , vb0234 , vb0235 , vb0236 , vb0237 , vb0238 , vb0239 , vb0240 , vb0241 , vb0242 , vb0243 , vb0244 , vb0245 , vb0246 , vb0247 , vb0248 , vb0249 , vb0250 , vb0251 , vb0252 , vb0253 , vb0254 , vb0255 , vb0256 , vb0257 , vb0258 , vb0259 , vb0260 , vb0261 , vb0262 , vb0263 , vb0264 , vb0265 , vb0266 , vb0267 , vb0268 , vb0269 , vb0270 , vb0271 , vb0272 , vb0273 , vb0274 , vb0275 , vb0276 , vb0277 , vb0278 , vb0279 , vb0280 , vb0281 , vb0282 , vb0283 , vb0284 , vb0285 , vb0286 , vb0287 , vb0288 , vb0289 , vb0290 , vb0291 , vb0292 , vb0293 , vb0294 , vb0295 , vb0296 , vb0297 , vb0298 , vb0299 , vb0300 , vb0301 , vb0302 , vb0303 , vb0304 , vb0305 , vb0306 , vb0307 , vb0308 , vb0309 , vb0310 , vb0311 , vb0312 , vb0313 , vb0314 , vb0315 , vb0316 , vb0317 , vb0318 , vb0319 , vb0320 , vb0321 , vb0322 , vb0323 , vb0324 , vb0325 , vb0326 , vb0327 , vb0328 , vb0329 , vb0330 , vb0331 , vb0332 , vb0333 , vb0334 , vb0335 , vb0336 , vb0337 , vb0338 , vb0339 , vb0340 , vb0341 , vb0342 , vb0343 , vb0344 , vb0345 , vb0346 , vb0347 , vb0348 , vb0349 , vb0350 , vb0351 , vb0352 , vb0353 , vb0354 , vb0355 , vb0356 , vb0357 , vb0358 , vb0359 , vb0360 , vb0361 , vb0362 , vb0363 , vb0364 , vb0365 , vb0366 , vb0367 , vb0368 , vb0369 , vb0370 , vb0371 , vb0372 , vb0373 , vb0374 , vb0375 , vb0376 , vb0377 , vb0378 , vb0379 , vb0380 , vb0381 , vb0382 , vb0383 , vb0384 , vb0385 , vb0386 , vb0387 , vb0388 , vb0389 , vb0390 , vb0391 , vb0392 , vb0393 , vb0394 , vb0395 , vb0396 , vb0397 , vb0398 , vb0399 , vb0400 , vb0401 , vb0402 , vb0403 , vb0404 , vb0405 , vb0406 , vb0407 , vb0408 , vb0409 , vb0410 , vb0411 , vb0412 , vb0413 , vb0414 , vb0415 , vb0416 , vb0417 , vb0418 , vb0419 , vb0420 , vb0421 , vb0422 , vb0423 , vb0424 , vb0425 , vb0426 , vb0427 , vb0428 , vb0429 , vb0430 , vb0431 , vb0432 , vb0433 , vb0434 , vb0435 , vb0436 , vb0437 , vb0438 , vb0439 , vb0440 , vb0441 , vb0442 , vb0443 , vb0444 , vb0445 , vb0446 , vb0447 , vb0448 , vb0449 , vb0450 , vb0451 , vb0452 , vb0453 , vb0454 , vb0455 , vb0456 , vb0457 , vb0458 , vb0459 , vb0460 , vb0461 , vb0462 , vb0463 , vb0464 , vb0465 , vb0466 , vb0467 , vb0468 , vb0469 , vb0470 , vb0471 , vb0472 , vb0473 , vb0474 , vb0475 , vb0476 , vb0477 , vb0478 , vb0479 , vb0480 , vb0481 , vb0482 , vb0483 , vb0484 , vb0485 , vb0486 , vb0487 , vb0488 , vb0489 , vb0490 , vb0491 , vb0492 , vb0493 , vb0494 , vb0495 , vb0496 , vb0497 , vb0498 , vb0499 , vb0500 , vb0501 , vb0502 , vb0503 , vb0504 , vb0505 , vb0506 , vb0507 , vb0508 , vb0509 , vb0510 , vb0511 , vb0512 , vb0513 , vb0514 , vb0515 , vb0516 , vb0517 , vb0518 , vb0519 , vb0520 , vb0521 , vb0522 , vb0523 , vb0524 , vb0525 , vb0526 , vb0527 , vb0528 , vb0529 , vb0530 , vb0531 , vb0532 , vb0533 , vb0534 , vb0535 , vb0536 , vb0537 , vb0538 , vb0539 , vb0540 , vb0541 , vb0542 , vb0543 , vb0544 , vb0545 , vb0546 , vb0547 , vb0548 , vb0549 , vb0550 , vb0551 , vb0552 , vb0553 , vb0554 , vb0555 , vb0556 , vb0557 , vb0558 , vb0559 , vb0560 , vb0561 , vb0562 , vb0563 , vb0564 , vb0565 , vb0566 , vb0567 , vb0568 , vb0569 , vb0570 , vb0571 , vb0572 , vb0573 , vb0574 , vb0575 , vb0576 , vb0577 , vb0578 , vb0579 , vb0580 , vb0581 , vb0582 , vb0583 , vb0584 , vb0585 , vb0586 , vb0587 , vb0588 , vb0589 , vb0590 , vb0591 , vb0592 , vb0593 , vb0594 , vb0595 , vb0596 , vb0597 , vb0598 , vb0599 , vb0600 , vb0601 , vb0602 , vb0603 , vb0604 , 1d531d99 , 9ebbb164 , 50e662b4 , ecd96a7f",
+        "Related Purchases": "7067ec21 , 3689cb25"
+    },
+    {
+        "_RowNumber": "4",
+        "manufacturer_id": "efdc5ea6",
+        "Manufacturer": "Sampla Belting",
+        "Country": "Италия",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "5",
+        "manufacturer_id": "bef4097c",
+        "Manufacturer": "Yongli Belting",
+        "Country": "Китай",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "6",
+        "manufacturer_id": "ed0ae335",
+        "Manufacturer": "PIX",
+        "Country": "Индия",
+        "Related VBelts": "pjb001 , pjb002 , pjb004 , pjb005 , pjb007 , pjb009 , pjb010 , pjb011 , pjb013 , pjb015 , pjb016 , pjb017 , pjb018 , pjb019 , pjb020 , pjb022 , pjb023 , pjb025 , pjb027 , pjb028 , pjb029 , pjb031 , pjb032 , pjb034 , pjb035 , vb0001 , vb0007 , vb0008 , vb0010 , vb0011 , vb0013 , vb0014 , vb0015 , vb0016 , vb0018 , vb0019 , vb0020 , vb0021 , vb0022 , vb0023 , vb0025 , vb0026 , vb0027 , vb0029 , vb0030 , vb0031 , vb0032 , vb0034 , vb0035 , vb0037 , vb0038 , vb0040 , vb0042 , vb0044 , vb0046 , vb0048 , vb0049 , vb0051 , vb0052 , vb0053 , vb0054 , vb0056 , vb0058 , vb0060 , vb0061 , vb0062 , vb0063 , vb0064 , vb0065 , vb0067 , vb0070 , vb0071 , vb0074 , vb0076 , vb0077 , vb0078 , vb0079 , vb0081 , vb0082 , vb0083 , vb0085 , vb0086 , vb0088 , vb0089 , vb0090 , vb0091 , vb0092 , vb0094 , vb0095 , vb0096 , vb0097 , vb0098 , vb0099 , vb0100 , vb0101 , vb0102 , vb0103 , vb0105 , vb0106 , vb0107 , vb0108 , vb0109 , vb0110 , vb0111 , vb0113 , vb0114 , vb0115 , vb0116 , vb0119 , vb0121 , vb0123 , vb0125 , vb0127 , vb0128 , vb0130 , vb0132 , vb0134 , vb0136 , vb0138 , vb0139 , vb0141 , vb0143 , vb0144 , vb0145 , vb0147 , vb0149 , vb0151 , vb0152 , vb0153 , vb0155 , vb0157 , vb0158 , vb0161 , vb0162 , vb0164 , vb0165 , vb0167 , vb0168 , vb0170 , vb0171 , vb0172 , vb0175 , vb0176 , vb0178 , vb0180 , vb0182 , vb0184 , vb0185 , vb0186 , vb0187 , vb0188 , vb0190 , vb0191 , vb0192 , vb0193 , vb0194 , vb0196 , vb0197 , vb0198 , vb0200 , vb0201 , vb0203 , vb0204 , vb0205 , vb0207 , vb0209 , vb0210 , vb0212 , vb0213 , vb0215 , vb0216 , vb0217 , vb0219 , vb0220 , vb0221 , vb0223 , vb0224 , vb0225 , vb0226 , vb0227 , 6d368bb5 , 6d3d807a , 95b24d32 , 9f44261e , cb069e90 , 339cb61d , d7c45d9b , 87e54ee7 , de06e7b4 , 10e58cbd , ff69bb64 , 77540bf3 , 18de56fc , a6988f61 , 27339d99 , 59c1568b , 25bc88d4 , 044e0d13 , cb9d2026 , 343f80fd , ad4ea6a5 , 74d98cf5 , 20cef789 , ce588e46 , b14686ce , e8a16986 , f05aa7fe , d2b182ae , 4e0bb621 , 9a0298a1 , 1740d1e6 , 3d7e1665 , d4668477 , e54c683e , 20bce83a , 73a8c357 , c3cd2d77 , 05209c58 , df1bd2d4 , 27c31a95 , 4a724076 , 0c4458b7 , af5ab326 , 0e12124a , d70805e8 , a5a7d452 , 6361b4fa , 53ac19d7 , 5830df24 , 8d1aadd1 , 0f2fe837 , 0b1916bc , a12ba126 , 6e4e4e14 , 28c7b37a , dc384879 , d848fdf6 , 54cea1f1 , 164129a9 , cf9001ec , 427c06a6 , 0926b462 , 141bb0c1 , a5a0c797 , aa14719f , 3f5c90f0 , 580e71cc , ea9969e8 , 922b87e2 , 8d0ba63d , 084d056a , 2f7e8391 , 88e6e6bd , 7b032705 , 380bb981 , 591b71ec , afb8118b , 04bafd24 , 59a6ac32 , b77aac83 , 2954da9e , cd224e6e , be89e2bc , 11e7c453 , f2eca8b6 , 02c38bcb , bdde88db , 9c0a3f6e , 4607a847 , a4b7efc5 , c1358a6a , 9b206019 , 7aaf8de2 , cf24513a , 74a5e2f7 , ca3a5d39 , 9562e3f1 , 33cf82dc , b499cf4d , 7229e7f8 , 7557fcb1 , ed5a89c9 , 3aa62608 , b7245264 , 6a1f1e2e , 6a19c7cc , 1575c675 , cbece63d , e8cf9af4 , 4ee57f79 , bd9b8f33 , 7d4e2ac9 , 53f40015 , acb88b97 , 9617f54a , 6cfff005 , 76a67e6a , d37a7fc5 , 7f3a1f08 , 018f2835 , 8687c896 , 054b0b7c , 34de039a , b22184fc , decdc3af , e4b1eb29 , 25aeae51 , 2e4d1d8f , c1c79c52 , 4270f2d4 , f19bcdbc , e685b6c3 , f4eaf3b4 , 591761c1 , c97c7096 , cabbb115 , c7b169bf , 8d0bf978 , 886c6618 , 78e930c7 , 3a66afd9 , 78ae3fbd , df5feebe , 25c9d090 , 5b801aad , 32dbc814 , -516464 , 0d99a1d9 , 7ad3529c , 7000d548 , d9c37bbd , 03605a65 , b92b81a2 , 7cfff762 , 84aa721b , a8fb2ea2 , c2d0c95c , c2fe536a , 8b68f862 , c6a60086 , 99854f25 , 1b9e065d , 47245537 , c490d62e , b3394afe , 79bafa5c , 007c33f7 , 5cc6b038 , f6fa27f8 , 1868cd65 , b7a3f872 , 6f0e5912 , 11b2c052 , ad93fec8 , 1703c1a1 , 424f601a , 6ec20101 , c8899461 , b1aef238 , 87d572fa , 7f72cc56 , 74e7083a , 40e17e59 , aab364b2 , 63515514 , 9bf48c38 , 43385807 , 7081ab4c , e42982ff , cc81a4a4 , 0f400555 , d14e83b1 , 7725f346",
+        "Related Purchases": "8b4aa749 , 86122b8a"
+    },
+    {
+        "_RowNumber": "7",
+        "manufacturer_id": "7f7d7441",
+        "Manufacturer": "NOVOBELT",
+        "Country": "Китай",
+        "Related VBelts": "ce5116ce , 05ba8b70 , 1d9399b4 , b9ab40f1 , 1f7ae920 , d0ddb139",
+        "Related Purchases": "ff7f0f91"
+    },
+    {
+        "_RowNumber": "8",
+        "manufacturer_id": "93105a14",
+        "Manufacturer": "MITSUBOSHI",
+        "Country": "Япония",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "9",
+        "manufacturer_id": "4942b814",
+        "Manufacturer": "ISOFLEX",
+        "Country": "Турция",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "10",
+        "manufacturer_id": "8bac3da3",
+        "Manufacturer": "NYCO",
+        "Country": "Китай",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "11",
+        "manufacturer_id": "1fca2def",
+        "Manufacturer": "BRECOFLEX",
+        "Country": "США",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "12",
+        "manufacturer_id": "d5424355",
+        "Manufacturer": "MEGADYNE BASIC",
+        "Country": "Италия",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "13",
+        "manufacturer_id": "21daa4c5",
+        "Manufacturer": "GATES AUTO MASTER",
+        "Country": "SPAIN",
+        "Related VBelts": "558543b3",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "14",
+        "manufacturer_id": "ba99bc2a",
+        "Manufacturer": "BANDO",
+        "Country": "JAPAN",
+        "Related VBelts": "vb0005 , 3a0fa2d4 , 6872f510 , 4e5f9c0e",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "15",
+        "manufacturer_id": "ecfac2b9",
+        "Manufacturer": "GUMMIRING",
+        "Country": "Китай",
+        "Related VBelts": "e12608c5",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "16",
+        "manufacturer_id": "2aae1885",
+        "Manufacturer": "POGGI",
+        "Country": "Италия",
+        "Related VBelts": "",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "17",
+        "manufacturer_id": "b7d47c7b",
+        "Manufacturer": "PIRELLI",
+        "Country": "Италия",
+        "Related VBelts": "6b20cfe7 , 257c30c6 , 1c48b3c5",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "18",
+        "manufacturer_id": "a20dbe9a",
+        "Manufacturer": "DAYCO",
+        "Country": "США",
+        "Related VBelts": "e1352875 , 0bb9ac58",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "19",
+        "manufacturer_id": "8559f8bf",
+        "Manufacturer": "OIL - STAT",
+        "Country": "Индия",
+        "Related VBelts": "0d77aa7a",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "20",
+        "manufacturer_id": "65de8302",
+        "Manufacturer": "FIRST CAR BELT",
+        "Country": "Китай",
+        "Related VBelts": "ccf1376d , 34c83852",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "21",
+        "manufacturer_id": "0715519e",
+        "Manufacturer": "ROFLEX",
+        "Country": "Германия",
+        "Related VBelts": "0718fc40",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "22",
+        "manufacturer_id": "f36779d0",
+        "Manufacturer": "OPTIBELT",
+        "Country": "Германия",
+        "Related VBelts": "e08a14bd , 240b53e1",
+        "Related Purchases": ""
+    },
+    {
+        "_RowNumber": "23",
+        "manufacturer_id": "96c649f5",
+        "Manufacturer": "GOOD YEAR",
+        "Country": "США",
+        "Related VBelts": "6b7b9a8d , ac1e9026 , 7087b01c",
+        "Related Purchases": ""
+    }
+]
