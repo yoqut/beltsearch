@@ -28,6 +28,8 @@ export interface Product {
   price: number;
   /** AppSheetdagi sotuv narxi (QQS bilan), so'm */
   priceVat: number;
+  /** Dollar kursi (Reference jadvalidan) */
+  usdRate: number;
   /** Qo'shimcha ma'lumot: uzunlik, en, balandlik va h.k. */
   info: Record<string, string>;
 }
