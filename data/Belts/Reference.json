@@ -1,26 +1,26 @@
 [
-    {
-        "_RowNumber": "2",
-        "reference_id": "33e260e3",
-        "Type": "Курс доллара",
-        "Value": "13500"
-    },
-    {
-        "_RowNumber": "3",
-        "reference_id": "7215dee5",
-        "Type": "Стоимость соединения круглого ремня",
-        "Value": "20000"
-    },
-    {
-        "_RowNumber": "4",
-        "reference_id": "a7e16230",
-        "Type": "Упаковка маленькая",
-        "Value": "2000"
-    },
-    {
-        "_RowNumber": "5",
-        "reference_id": "c00f6a7c",
-        "Type": "Упаковка большая",
-        "Value": "10000"
-    }
+  {
+    "_RowNumber": "2",
+    "reference_id": "33e260e3",
+    "Type": "Курс доллара",
+    "Value": "13500"
+  },
+  {
+    "_RowNumber": "3",
+    "reference_id": "7215dee5",
+    "Type": "Стоимость соединения круглого ремня",
+    "Value": "20000"
+  },
+  {
+    "_RowNumber": "4",
+    "reference_id": "a7e16230",
+    "Type": "Упаковка маленькая",
+    "Value": "2000"
+  },
+  {
+    "_RowNumber": "5",
+    "reference_id": "c00f6a7c",
+    "Type": "Упаковка большая",
+    "Value": "10000"
+  }
 ]

@@ -106,6 +106,7 @@ export function lineTotals(
     discountAmount,
     total,
     vatAmount: totalVat - total,
+    totalVat,
     profit: total - u.netCost * safeQty,
   };
 }
